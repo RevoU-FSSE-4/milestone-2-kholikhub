@@ -80,6 +80,7 @@ export default function Register() {
         
         } catch (error) {
             console.error('Error:', error);
+
         }
     }
 
