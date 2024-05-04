@@ -1,7 +1,7 @@
 import * as Yup from "yup";
 import { ErrorMessage, Field, Form, Formik, FormikProps } from "formik";
 import { useState } from "react";
-import { Typography } from "antd";
+import { Input, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
 import NavigationGlobal from "../Components/NavigationGlobal"
 import FooterComponent from "../Components/FooterComponent";
@@ -12,7 +12,7 @@ const validationSchema = Yup.object().shape({
   password: Yup.string()
     .required("Password is required")
     .min(8, "Password Least 8 characters"),
-  email: Yup.string().email("Invalid email address").required("Required"),
+  email: Yup.string().email("Invalid email address").required("Email is required"),
 });
 
 const initialValues = {
@@ -31,6 +31,7 @@ interface FormData {
 export default function FormLogin() {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
+    const [fulfillOne, setFulfillOne] = useState("");
 
 
     const navigate = useNavigate()
@@ -71,12 +72,26 @@ export default function FormLogin() {
                 alert("Login Success");
                 localStorage.setItem('token', data.token);
                 navigate("/Dashboard");
-            }, 1000);
+            }, 500);
         
         } catch (error) {
             console.error('Error:', error);
+            alert("invalid email or password");
         }
     }
+
+    const handlePage = (props: FormikProps<FormData>) => {
+      if (
+        props.values.password &&
+        props.values.email &&
+        !props.errors.password &&
+        !props.errors.email
+      ) {
+        setFulfillOne("");
+      } else {
+        setFulfillOne("Form is not valid");
+      }
+    };
     return (
       <>
         <NavigationGlobal/>
@@ -90,8 +105,9 @@ export default function FormLogin() {
               <div className=" border-black border-2 p-6 my-52 bg-rose-500 rounded-lg">
                 <Form onSubmit={onSubmit} >
                     <div>
+                      <p className=" font-bold">{fulfillOne}</p>
                       <h2 className="font-bold m-4 text-white">LOGIN ACCOUNT</h2>
-
+                      
                       <div className="mt-5 text-black ">
                         <label className="text-white " htmlFor="email">
                           Email
@@ -134,6 +150,7 @@ export default function FormLogin() {
                           type="submit"
                           className=" hover:bg-sky-400 border-black text-black font-bold border-2 p-2 pr-9 bg-white"
                           onClick={() => {
+                            handlePage(props);
                           }}
                         >
                           LOGIN

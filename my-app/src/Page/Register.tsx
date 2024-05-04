@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { ErrorMessage, Field, Form, Formik } from "formik";
+import { ErrorMessage, Field, Form, Formik, FormikProps } from "formik";
 import { useState } from "react";
 import { Input, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
@@ -15,7 +15,7 @@ const validationSchema = Yup.object().shape({
     .required("Username is required"),
   password: Yup.string()
     .required("Password is required")
-    .min(8, "Password must be at least 8 characters"),
+    .min(8, "Password least 8 characters"),
   email: Yup.string().email("Invalid email address").required("Email is required"),
 });
 
@@ -35,21 +35,18 @@ export default function Register() {
     const [name, setName,]= useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [email, setEmail] = useState<string>("");
+    const [fulfillOne, setFulfillOne] = useState("");
 
     const navigate = useNavigate()
-    // const handleSubmit = (values: FormData | any) => {
-    //   alert(JSON.stringify(values, null, 10));
-    //   setName(values.name);
-    //   setEmail(values.email);
-    //   setPassword(values.password);
-    // };
 
-    async function onSubmit(e:any) {
-        e.preventDefault()
+    async function onSubmit(e:FormData | any) {
+      e.preventDefault()
         // console.log(e.target.email.value)
+        // alert(JSON.stringify(e, null, 10));
         setName(e.name);
         setPassword(e.password);
         setEmail(e.email);
+
         // POST
         const body: FormData = {
             "name": e.target.name.value,
@@ -78,13 +75,28 @@ export default function Register() {
             // next move
             setTimeout(() => {
                 alert("Register Success");
-                navigate("/login");
-            }, 1000);
+                navigate("/Formlogin");
+            }, 500);
         
         } catch (error) {
             console.error('Error:', error);
         }
     }
+
+    const handlePage = (props: FormikProps<FormData>) => {
+      if (
+        props.values.name &&
+        props.values.password &&
+        props.values.email &&
+        !props.errors.name &&
+        !props.errors.password &&
+        !props.errors.email
+      ) {
+        setFulfillOne("");
+      } else {
+        setFulfillOne("Form is not valid");
+      }
+    };
     return (
       <>
         <NavigationGlobal/>
@@ -96,8 +108,9 @@ export default function Register() {
           >
             {(props) => (
               <div className=" border-black border-2 py-5 px-20 my-28 bg-rose-500 rounded-lg">
-                <Form onSubmit={onSubmit} >
+                <Form onSubmit={onSubmit}>
                     <div>
+                      <p className=" font-bold">{fulfillOne}</p>
                       <h2 className="font-bold m-5 text-white ">REGISTER ACCOUNT</h2>
                       <div className=" text-white">
                         <label htmlFor="name">User Name</label>
@@ -161,7 +174,8 @@ export default function Register() {
                         <button
                           type="submit"
                           className=" hover:bg-sky-400 border-black font-bold bg-white border-2 p-2 pr-9"
-                          onClick={() => {
+                          onClick={() =>  {
+                            handlePage(props);
                           }}
                         >
                           REGISTER

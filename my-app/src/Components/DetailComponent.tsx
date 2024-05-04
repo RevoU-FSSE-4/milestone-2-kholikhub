@@ -51,11 +51,11 @@ const PokemonDetail = () => {
         )}
       </div>
       <div>
-      {evolution && (
-          <h1>
-            {data?.id} evolution to{" "}
-          </h1>
-        )}
+        {data && (
+            <>
+              <img src={data?.sprites.front_default }/>
+            </>
+          )}
       </div>
 
     </div>

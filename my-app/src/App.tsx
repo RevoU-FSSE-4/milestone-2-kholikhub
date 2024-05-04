@@ -4,7 +4,6 @@ import Home from "./Page/Home";
 import PokemonEvolution from "./Page/PokemonEvolution";
 import Register from "./Page/Register";
 import FormLogin from "./Page/FormLogin";
-import DetailComponent from "./Components/DetailComponent";
 import Dashboard from "./Page/Dashboard";
 import PrivateRoute from "./Route/PrivateRoute";
 

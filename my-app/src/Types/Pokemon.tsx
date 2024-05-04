@@ -1,15 +1,16 @@
 export interface Pokemon {
-  id: number;
+  id: string;
   species: Species;
   name: string;
   sprites: Sprites;
   types: String;
   type: string;
+  front_default:string;
+  chain: Chain;
 }
 
 interface Sprites {
   front_default: string;
-  back_default: string;
 }
 
 interface Species {
