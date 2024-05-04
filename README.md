@@ -1,9 +1,9 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/KmofddUl)
 
-##  Malestone Assignment #1
+##  Malestone Assignment #2
 
 Tugas Milestone 2 assignment 
 
-Utuk Tampilannya bisa di lihat [di sini](https://shimmering-faun-44a52d.netlify.app/)
+Untuk Tampilannya bisa di lihat [di sini](https://shimmering-faun-44a52d.netlify.app/)
 
 ---
